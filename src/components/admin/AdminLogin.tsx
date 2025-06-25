@@ -133,7 +133,7 @@ const AdminLogin: React.FC = () => {
             </button>
           </form>
 
-          {/* Demo Credentials */}
+          {/* Demo Credentials 
           <div className="mt-6 p-4 bg-gray-50 rounded-lg">
             <p className="text-sm text-gray-600 mb-2">Demo Credentials:</p>
             <div className="text-xs text-gray-500 space-y-1">
@@ -148,7 +148,7 @@ const AdminLogin: React.FC = () => {
               Fill Demo Credentials
             </button>
           </div>
-
+            */}
           {/* Back to Blog */}
           <div className="mt-6 text-center">
             <button
