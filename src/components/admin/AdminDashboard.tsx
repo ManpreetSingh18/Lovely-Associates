@@ -18,6 +18,8 @@ import {
 } from 'lucide-react';
 import { isAuthenticated, removeAuthToken, getCurrentUser } from '../../utils/auth';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 interface BlogPost {
   id: string;
   title: string;
@@ -53,7 +55,7 @@ const AdminDashboard: React.FC = () => {
   const fetchPosts = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:3001/api/blogs');
+      const response = await fetch(`${API_URL}/api/blogs`);
       
       if (!response.ok) {
         throw new Error('Failed to fetch posts');
@@ -77,7 +79,7 @@ const AdminDashboard: React.FC = () => {
 
     try {
       setDeleteLoading(postId);
-      const response = await fetch(`http://localhost:3001/api/blogs/${postId}`, {
+      const response = await fetch(`${API_URL}/api/blogs/${postId}`, {
         method: 'DELETE',
       });
 

@@ -4,6 +4,8 @@ import { ArrowLeft, Save, Eye, AlertCircle, Loader, Image, Tag, FileText } from 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { isAuthenticated } from '../../utils/auth';
+;
+const API_URL = import.meta.env.VITE_API_URL;
 
 interface BlogFormData {
   title: string;
@@ -53,7 +55,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ mode }) => {
       setError('');
       
       // Try to fetch by ID first, then by slug if that fails
-      let response = await fetch(`http://localhost:3001/api/blogs/${id}`);
+      let response = await fetch(`${API_URL}/api/blogs/${id}`);
       
       if (!response.ok) {
         throw new Error('Failed to load post');
@@ -149,12 +151,12 @@ const BlogForm: React.FC<BlogFormProps> = ({ mode }) => {
       let method: string;
 
       if (mode === 'create') {
-        url = 'http://localhost:3001/api/blogs';
+        url = `${API_URL}/api/blogs`;
         method = 'POST';
       } else {
         // For edit mode, use the original slug or ID
         const identifier = originalSlug || id;
-        url = `http://localhost:3001/api/blogs/${identifier}`;
+        url = `${API_URL}/api/blogs/${identifier}`;
         method = 'PUT';
       }
 

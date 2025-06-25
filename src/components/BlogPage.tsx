@@ -11,12 +11,12 @@ const BlogPage: React.FC = () => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [blogPosts, setBlogPosts] = useState<any[]>([]); // ✅ fetchable state
   const [loading, setLoading] = useState(true);
-
+  const API_URL = import.meta.env.VITE_API_URL;
   // ✅ Fetch blog posts from backend
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await fetch("http://localhost:3001/api/blogs");
+        const res = await fetch(`${API_URL}/api/blogs`);
         const data = await res.json();
         setBlogPosts(data.blogs || []);
       } catch (err) {

@@ -13,7 +13,7 @@ const BlogPost: React.FC = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await fetch(`http://localhost:3001/api/blogs/${slug}`);
+        const res = await fetch(`http://st:3001/api/blogs/${slug}`);
         if (!res.ok) throw new Error('Blog not found');
         const data = await res.json();
         setPost(data);
