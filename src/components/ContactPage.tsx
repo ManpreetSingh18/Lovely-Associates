@@ -1,29 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle, AlertCircle } from 'lucide-react';
-
+import React, { useState, useEffect } from "react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Clock,
+  Send,
+  CheckCircle,
+  AlertCircle,
+} from "lucide-react";
+import emailjs from "@emailjs/browser";
 const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
   });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  
   useEffect(() => {
     // Set SEO meta tags
-    document.title = 'Contact Us - Get in Touch | Lovely Associates East Delhi';
-    
+    document.title = "Contact Us - Get in Touch | Lovely Associates East Delhi";
+
     const updateOrCreateMetaTag = (name: string, content: string) => {
       let metaTag = document.querySelector(`meta[name="${name}"]`);
       if (metaTag) {
-        metaTag.setAttribute('content', content);
+        metaTag.setAttribute("content", content);
       } else {
-        metaTag = document.createElement('meta');
-        metaTag.setAttribute('name', name);
-        metaTag.setAttribute('content', content);
+        metaTag = document.createElement("meta");
+        metaTag.setAttribute("name", name);
+        metaTag.setAttribute("content", content);
         document.head.appendChild(metaTag);
       }
     };
@@ -31,42 +43,66 @@ const ContactPage: React.FC = () => {
     const updateOrCreateOGTag = (property: string, content: string) => {
       let ogTag = document.querySelector(`meta[property="${property}"]`);
       if (ogTag) {
-        ogTag.setAttribute('content', content);
+        ogTag.setAttribute("content", content);
       } else {
-        ogTag = document.createElement('meta');
-        ogTag.setAttribute('property', property);
-        ogTag.setAttribute('content', content);
+        ogTag = document.createElement("meta");
+        ogTag.setAttribute("property", property);
+        ogTag.setAttribute("content", content);
         document.head.appendChild(ogTag);
       }
     };
 
     // Meta tags
-    updateOrCreateMetaTag('description', 'Contact Lovely Associates for all your real estate needs in East Delhi. Call +91-9899XXXXXX or visit our office near Geeta Colony. Expert property consultation available.');
-    updateOrCreateMetaTag('keywords', 'contact Lovely Associates, real estate East Delhi contact, property dealers Delhi phone, Geeta Colony real estate office, Delhi property consultation');
-    updateOrCreateMetaTag('author', 'Lovely Associates');
-    updateOrCreateMetaTag('robots', 'index, follow');
+    updateOrCreateMetaTag(
+      "description",
+      "Contact Lovely Associates for all your real estate needs in East Delhi. Call +91-9899XXXXXX or visit our office near Geeta Colony. Expert property consultation available."
+    );
+    updateOrCreateMetaTag(
+      "keywords",
+      "contact Lovely Associates, real estate East Delhi contact, property dealers Delhi phone, Geeta Colony real estate office, Delhi property consultation"
+    );
+    updateOrCreateMetaTag("author", "Lovely Associates");
+    updateOrCreateMetaTag("robots", "index, follow");
 
     // OpenGraph tags
-    updateOrCreateOGTag('og:title', 'Contact Us - Get in Touch | Lovely Associates East Delhi');
-    updateOrCreateOGTag('og:description', 'Contact Lovely Associates for expert real estate services in East Delhi. Professional property consultation and personalized service.');
-    updateOrCreateOGTag('og:type', 'website');
-    updateOrCreateOGTag('og:image', 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1200');
-    updateOrCreateOGTag('og:url', window.location.href);
+    updateOrCreateOGTag(
+      "og:title",
+      "Contact Us - Get in Touch | Lovely Associates East Delhi"
+    );
+    updateOrCreateOGTag(
+      "og:description",
+      "Contact Lovely Associates for expert real estate services in East Delhi. Professional property consultation and personalized service."
+    );
+    updateOrCreateOGTag("og:type", "website");
+    updateOrCreateOGTag(
+      "og:image",
+      "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1200"
+    );
+    updateOrCreateOGTag("og:url", window.location.href);
 
     // Twitter Card tags
-    updateOrCreateMetaTag('twitter:card', 'summary_large_image');
-    updateOrCreateMetaTag('twitter:title', 'Contact Us - Get in Touch | Lovely Associates East Delhi');
-    updateOrCreateMetaTag('twitter:description', 'Contact Lovely Associates for expert real estate services in East Delhi.');
-    updateOrCreateMetaTag('twitter:image', 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1200');
+    updateOrCreateMetaTag("twitter:card", "summary_large_image");
+    updateOrCreateMetaTag(
+      "twitter:title",
+      "Contact Us - Get in Touch | Lovely Associates East Delhi"
+    );
+    updateOrCreateMetaTag(
+      "twitter:description",
+      "Contact Lovely Associates for expert real estate services in East Delhi."
+    );
+    updateOrCreateMetaTag(
+      "twitter:image",
+      "https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1200"
+    );
 
     // Canonical URL
     let canonicalLink = document.querySelector('link[rel="canonical"]');
     if (canonicalLink) {
-      canonicalLink.setAttribute('href', window.location.href);
+      canonicalLink.setAttribute("href", window.location.href);
     } else {
-      canonicalLink = document.createElement('link');
-      canonicalLink.setAttribute('rel', 'canonical');
-      canonicalLink.setAttribute('href', window.location.href);
+      canonicalLink = document.createElement("link");
+      canonicalLink.setAttribute("rel", "canonical");
+      canonicalLink.setAttribute("href", window.location.href);
       document.head.appendChild(canonicalLink);
     }
 
@@ -74,30 +110,32 @@ const ContactPage: React.FC = () => {
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "ContactPage",
-      "mainEntity": {
+      mainEntity: {
         "@type": "RealEstateAgent",
-        "name": "Lovely Associates",
-        "telephone": "+91-9899XXXXXX",
-        "email": "lovelyassociates@gmail.com",
-        "address": {
+        name: "Lovely Associates",
+        telephone: "+91-9899XXXXXX",
+        email: "lovelyassociates@gmail.com",
+        address: {
           "@type": "PostalAddress",
-          "streetAddress": "Near Geeta Colony",
-          "addressLocality": "East Delhi",
-          "addressRegion": "Delhi",
-          "postalCode": "110031",
-          "addressCountry": "IN"
+          streetAddress: "Near Geeta Colony",
+          addressLocality: "East Delhi",
+          addressRegion: "Delhi",
+          postalCode: "110031",
+          addressCountry: "IN",
         },
-        "openingHours": "Mo-Sa 09:00-18:00"
-      }
+        openingHours: "Mo-Sa 09:00-18:00",
+      },
     };
 
-    const existingScript = document.querySelector('script[type="application/ld+json"]');
+    const existingScript = document.querySelector(
+      'script[type="application/ld+json"]'
+    );
     if (existingScript) {
       existingScript.remove();
     }
 
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
     script.textContent = JSON.stringify(structuredData);
     document.head.appendChild(script);
   }, []);
@@ -106,101 +144,107 @@ const ContactPage: React.FC = () => {
     const newErrors: Record<string, string> = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
+      newErrors.name = "Name is required";
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = "Please enter a valid email address";
     }
 
     if (!formData.phone.trim()) {
-      newErrors.phone = 'Phone number is required';
-    } else if (!/^\d{10}$/.test(formData.phone.replace(/\D/g, ''))) {
-      newErrors.phone = 'Please enter a valid 10-digit phone number';
+      newErrors.phone = "Phone number is required";
+    } else if (!/^\d{10}$/.test(formData.phone.replace(/\D/g, ""))) {
+      newErrors.phone = "Please enter a valid 10-digit phone number";
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
+      newErrors.message = "Message is required";
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ''
+        [name]: "",
       }));
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
+
+    if (!validateForm()) return;
 
     setIsSubmitting(true);
-    setSubmitStatus('idle');
+    setSubmitStatus("idle");
+
+    const templateParams = {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      message: formData.message,
+    };
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // In a real application, you would send the data to your backend
-      console.log('Form submitted:', formData);
-      
-      setSubmitStatus('success');
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        message: ''
-      });
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        templateParams,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+        // replace with your public key
+      );
+
+      setSubmitStatus("success");
+      setFormData({ name: "", email: "", phone: "", message: "" });
     } catch (error) {
-      setSubmitStatus('error');
+      console.error("EmailJS Error:", error);
+      setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
     }
   };
 
+
   const contactInfo = [
     {
       icon: Mail,
-      title: 'Email',
-      value: 'lovelyassociates@gmail.com',
-      link: 'mailto:lovelyassociates@gmail.com'
+      title: "Email",
+      value: "lovelyassociates@gmail.com",
+      link: "mailto:lovelyassociates@gmail.com",
     },
     {
       icon: Phone,
-      title: 'Phone',
-      value: '+91-9899XXXXXX',
-      link: 'tel:+919899XXXXXX'
+      title: "Phone",
+      value: "+91-9899XXXXXX",
+      link: "tel:+919899XXXXXX",
     },
     {
       icon: MapPin,
-      title: 'Office',
-      value: 'Near Geeta Colony, East Delhi, Delhi - 110031',
-      link: 'https://maps.google.com/?q=Geeta+Colony+East+Delhi'
+      title: "Office",
+      value: "Near Geeta Colony, East Delhi, Delhi - 110031",
+      link: "https://maps.google.com/?q=Geeta+Colony+East+Delhi",
     },
     {
       icon: Clock,
-      title: 'Hours',
-      value: 'Mon - Sat: 9:00 AM - 6:00 PM',
-      link: null
-    }
+      title: "Hours",
+      value: "Mon - Sat: 9:00 AM - 6:00 PM",
+      link: null,
+    },
   ];
 
   return (
@@ -208,11 +252,10 @@ const ContactPage: React.FC = () => {
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-800 to-blue-900 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Contact Us
-          </h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
           <p className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-            Ready to find your dream property? Get in touch with our expert team today
+            Ready to find your dream property? Get in touch with our expert team
+            today
           </p>
         </div>
       </section>
@@ -221,25 +264,34 @@ const ContactPage: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           {/* Contact Form */}
           <div className="bg-white rounded-2xl shadow-xl p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
-            
-            {submitStatus === 'success' && (
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              Send us a Message
+            </h2>
+
+            {submitStatus === "success" && (
               <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-2">
                 <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
-                <p className="text-green-700">Thanks for contacting us! We'll get back to you soon.</p>
+                <p className="text-green-700">
+                  Thanks for contacting us! We'll get back to you soon.
+                </p>
               </div>
             )}
 
-            {submitStatus === 'error' && (
+            {submitStatus === "error" && (
               <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-2">
                 <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0" />
-                <p className="text-red-700">Something went wrong. Please try again.</p>
+                <p className="text-red-700">
+                  Something went wrong. Please try again.
+                </p>
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Full Name *
                 </label>
                 <input
@@ -249,7 +301,7 @@ const ContactPage: React.FC = () => {
                   value={formData.name}
                   onChange={handleInputChange}
                   className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
-                    errors.name ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                    errors.name ? "border-red-300 bg-red-50" : "border-gray-300"
                   }`}
                   placeholder="Enter your full name"
                 />
@@ -259,7 +311,10 @@ const ContactPage: React.FC = () => {
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Email Address *
                 </label>
                 <input
@@ -269,7 +324,9 @@ const ContactPage: React.FC = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
-                    errors.email ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                    errors.email
+                      ? "border-red-300 bg-red-50"
+                      : "border-gray-300"
                   }`}
                   placeholder="Enter your email address"
                 />
@@ -279,7 +336,10 @@ const ContactPage: React.FC = () => {
               </div>
 
               <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="phone"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Phone Number *
                 </label>
                 <input
@@ -289,7 +349,9 @@ const ContactPage: React.FC = () => {
                   value={formData.phone}
                   onChange={handleInputChange}
                   className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all ${
-                    errors.phone ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                    errors.phone
+                      ? "border-red-300 bg-red-50"
+                      : "border-gray-300"
                   }`}
                   placeholder="Enter your 10-digit phone number"
                 />
@@ -299,7 +361,10 @@ const ContactPage: React.FC = () => {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="message"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Message *
                 </label>
                 <textarea
@@ -309,7 +374,9 @@ const ContactPage: React.FC = () => {
                   value={formData.message}
                   onChange={handleInputChange}
                   className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none ${
-                    errors.message ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                    errors.message
+                      ? "border-red-300 bg-red-50"
+                      : "border-gray-300"
                   }`}
                   placeholder="Tell us about your property requirements..."
                 />
@@ -341,10 +408,13 @@ const ContactPage: React.FC = () => {
           {/* Contact Information */}
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                Get in Touch
+              </h2>
               <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Have questions about buying, selling, or renting property in East Delhi? 
-                Our experienced team is here to help you every step of the way.
+                Have questions about buying, selling, or renting property in
+                East Delhi? Our experienced team is here to help you every step
+                of the way.
               </p>
             </div>
 
@@ -355,13 +425,21 @@ const ContactPage: React.FC = () => {
                     <info.icon className="h-6 w-6 text-blue-800" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900 mb-1">{info.title}</h3>
+                    <h3 className="font-semibold text-gray-900 mb-1">
+                      {info.title}
+                    </h3>
                     {info.link ? (
                       <a
                         href={info.link}
                         className="text-gray-600 hover:text-blue-800 transition-colors"
-                        target={info.link.startsWith('http') ? '_blank' : undefined}
-                        rel={info.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        target={
+                          info.link.startsWith("http") ? "_blank" : undefined
+                        }
+                        rel={
+                          info.link.startsWith("http")
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
                       >
                         {info.value}
                       </a>
@@ -376,7 +454,9 @@ const ContactPage: React.FC = () => {
             {/* Google Maps Embed */}
             <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
               <div className="p-6 border-b border-gray-200">
-                <h3 className="text-lg font-semibold text-gray-900">Our Location</h3>
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Our Location
+                </h3>
               </div>
               <div className="h-64">
                 <iframe
