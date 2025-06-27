@@ -319,7 +319,7 @@ const AdminDashboard: React.FC = () => {
                               <Eye className="h-4 w-4" />
                             </button>
                             <button
-                              onClick={() => navigate(`/admin/edit/${post.id}`)}
+                              onClick={() => navigate(`/admin/edit/${post.slug}`)}
                               className="p-2 text-gray-400 hover:text-green-600 transition-colors"
                               title="Edit Post"
                             >

@@ -3,17 +3,18 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, User, Tag } from 'lucide-react';
 
 const BlogPost: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug } = useParams();
   const navigate = useNavigate();
 
   const [post, setPost] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await fetch(`http://st:3001/api/blogs/${slug}`);
+        const res = await fetch(`${API_URL}/api/blogs/${slug}`);
         if (!res.ok) throw new Error('Blog not found');
         const data = await res.json();
         setPost(data);

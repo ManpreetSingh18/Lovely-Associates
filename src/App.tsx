@@ -35,7 +35,7 @@ function App() {
             } 
           />
           <Route 
-            path="/admin/edit/:id" 
+            path="/admin/edit/:slug" 
             element={
               <ProtectedRoute>
                 <BlogForm mode="edit" />
@@ -53,7 +53,7 @@ function App() {
                   <Route path="/services" element={<ServicesPage />} />
                   <Route path="/contact" element={<ContactPage />} />
                   <Route path="/blog" element={<BlogPage />} />
-                  <Route path="/blog/:id" element={<BlogPost />} />
+                  <Route path="/blog/:slug" element={<BlogPost />} />
                 </Routes>
               </main>
               <Footer />

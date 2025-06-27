@@ -21,7 +21,8 @@ interface BlogFormProps {
 
 const BlogForm: React.FC<BlogFormProps> = ({ mode }) => {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { slug } = useParams<{ slug: string }>();
+
   const [formData, setFormData] = useState<BlogFormData>({
     title: '',
     summary: '',
@@ -34,6 +35,8 @@ const BlogForm: React.FC<BlogFormProps> = ({ mode }) => {
   const [error, setError] = useState('');
   const [previewMode, setPreviewMode] = useState(false);
   const [originalSlug, setOriginalSlug] = useState('');
+  
+  
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -44,10 +47,10 @@ const BlogForm: React.FC<BlogFormProps> = ({ mode }) => {
 
   // Load existing post data for edit mode
   useEffect(() => {
-    if (mode === 'edit' && id) {
+    if (mode === 'edit' && slug) {
       loadPost();
     }
-  }, [mode, id]);
+  }, [mode, slug]);
 
   const loadPost = async () => {
     try {
@@ -55,7 +58,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ mode }) => {
       setError('');
       
       // Try to fetch by ID first, then by slug if that fails
-      let response = await fetch(`${API_URL}/api/blogs/${id}`);
+      let response = await fetch(`${API_URL}/api/blogs/${slug}`);
       
       if (!response.ok) {
         throw new Error('Failed to load post');
@@ -72,7 +75,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ mode }) => {
       });
       
       // Store original slug for API calls
-      setOriginalSlug(post.slug || id);
+      setOriginalSlug(post.slug);
       
     } catch (err) {
       console.error('Error loading post:', err);
@@ -126,6 +129,9 @@ const BlogForm: React.FC<BlogFormProps> = ({ mode }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+
+    
+
     if (!validateForm()) {
       return;
     }
@@ -155,8 +161,9 @@ const BlogForm: React.FC<BlogFormProps> = ({ mode }) => {
         method = 'POST';
       } else {
         // For edit mode, use the original slug or ID
-        const identifier = originalSlug || id;
+        const identifier = originalSlug || slug;
         url = `${API_URL}/api/blogs/${identifier}`;
+
         method = 'PUT';
       }
 
