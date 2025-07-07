@@ -2,33 +2,40 @@ import React, { useState, useEffect } from "react";
 import { Search, Filter, Grid, List } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import BlogCard from "./BlogCard";
-import { blogPosts } from "../data/blogPosts";
 
 const BlogPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTag, setSelectedTag] = useState("All");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  const [blogPosts, setBlogPosts] = useState<any[]>([]); // ✅ fetchable state
+  const [blogPosts, setBlogPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const API_URL = import.meta.env.VITE_API_URL;
-  // ✅ Fetch blog posts from backend
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const res = await fetch(`${API_URL}/api/blogs`);
-        const data = await res.json();
-        setBlogPosts(data.blogs || []);
-      } catch (err) {
-        console.error("Failed to fetch blogs:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchPosts();
-  }, []);
 
-  // Handle URL parameters for tag filtering
+  // Fetch blog posts with retry logic
+  useEffect(() => {
+    const fetchWithRetry = async (retries = 4, delay = 1000) => {
+      setLoading(true);
+      setError(false);
+      for (let i = 0; i < retries; i++) {
+        try {
+          const res = await fetch(`${API_URL}/api/blogs`);
+          if (!res.ok) throw new Error("Fetch failed");
+          const data = await res.json();
+          setBlogPosts(data.blogs || []);
+          return;
+        } catch (err) {
+          console.error(`Attempt ${i + 1} failed:`, err);
+          if (i < retries - 1) await new Promise((r) => setTimeout(r, delay));
+        }
+      }
+      setError(true);
+    };
+
+    fetchWithRetry().finally(() => setLoading(false));
+  }, [API_URL]);
+
   useEffect(() => {
     const tagParam = searchParams.get("tag");
     if (tagParam) {
@@ -36,13 +43,11 @@ const BlogPage: React.FC = () => {
     }
   }, [searchParams]);
 
-  // Get all unique tags
   const allTags = [
     "All",
     ...Array.from(new Set(blogPosts.flatMap((post) => post.tags))),
   ];
 
-  // Filter and sort posts
   const filteredPosts = blogPosts
     .filter((post) => {
       const matchesSearch =
@@ -65,22 +70,20 @@ const BlogPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
+      {/* Hero */}
       <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Property Insights & Market Updates
-            </h1>
-            <p className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-              Stay informed with the latest trends, investment opportunities,
-              and expert advice from Delhi's trusted real estate professionals.
-            </p>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            Property Insights & Market Updates
+          </h1>
+          <p className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+            Stay informed with the latest trends, investment opportunities, and
+            expert advice from Delhi's trusted real estate professionals.
+          </p>
         </div>
       </div>
 
-      {/* Search and Filter Section */}
+      {/* Filters */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-xl shadow-md p-6 mb-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-4 lg:space-y-0">
@@ -96,7 +99,7 @@ const BlogPage: React.FC = () => {
               />
             </div>
 
-            {/* Tags Filter */}
+            {/* Tags */}
             <div className="flex items-center space-x-2">
               <Filter className="h-5 w-5 text-gray-500" />
               <select
@@ -112,7 +115,7 @@ const BlogPage: React.FC = () => {
               </select>
             </div>
 
-            {/* View Mode Toggle */}
+            {/* View Toggle */}
             <div className="flex items-center space-x-2 bg-gray-100 rounded-lg p-1">
               <button
                 onClick={() => setViewMode("grid")}
@@ -134,30 +137,16 @@ const BlogPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Results Counter */}
-        <div className="mb-6">
-          <p className="text-gray-600">
-            Showing {filteredPosts.length}{" "}
-            {filteredPosts.length === 1 ? "article" : "articles"}
-            {selectedTag !== "All" && ` in "${selectedTag}"`}
-          </p>
-        </div>
-
-        {/* Blog Posts Grid/List */}
-        <div
-          className={`${
-            viewMode === "grid"
-              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-              : "space-y-8"
-          }`}
-        >
-          {filteredPosts.map((post) => (
-            <BlogCard key={post.slug} post={post} />
-          ))}
-        </div>
-
-        {/* No Results */}
-        {filteredPosts.length === 0 && (
+        {/* Results */}
+        {loading ? (
+          <div className="flex justify-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-blue-800 border-opacity-60"></div>
+          </div>
+        ) : error ? (
+          <div className="text-center py-16 text-red-500">
+            Failed to load blog posts. Please try again later.
+          </div>
+        ) : filteredPosts.length === 0 ? (
           <div className="text-center py-16">
             <div className="max-w-md mx-auto">
               <div className="bg-gray-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
@@ -167,8 +156,7 @@ const BlogPage: React.FC = () => {
                 No articles found
               </h3>
               <p className="text-gray-600 mb-4">
-                Try adjusting your search terms or filters to find what you're
-                looking for.
+                Try adjusting your search terms or filters.
               </p>
               <button
                 onClick={() => {
@@ -181,15 +169,32 @@ const BlogPage: React.FC = () => {
               </button>
             </div>
           </div>
-        )}
+        ) : (
+          <>
+            <p className="text-gray-600 mb-6">
+              Showing {filteredPosts.length}{" "}
+              {filteredPosts.length === 1 ? "article" : "articles"}
+              {selectedTag !== "All" && ` in "${selectedTag}"`}
+            </p>
 
-        {/* Load More Button (for future pagination) */}
-        {filteredPosts.length > 0 && (
-          <div className="text-center mt-12">
-            <button className="bg-white text-blue-800 border-2 border-blue-800 px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 hover:text-white transition-all duration-300">
-              Load More Articles
-            </button>
-          </div>
+            <div
+              className={`${
+                viewMode === "grid"
+                  ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                  : "space-y-8"
+              }`}
+            >
+              {filteredPosts.map((post) => (
+                <BlogCard key={post.slug} post={post} />
+              ))}
+            </div>
+
+            <div className="text-center mt-12">
+              <button className="bg-white text-blue-800 border-2 border-blue-800 px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 hover:text-white transition-all duration-300">
+                Load More Articles
+              </button>
+            </div>
+          </>
         )}
       </div>
     </div>
