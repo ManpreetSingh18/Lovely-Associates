@@ -236,7 +236,7 @@ const ContactPage: React.FC = () => {
     {
       icon: MapPin,
       title: "Office",
-      value: "Near Geeta Colony, East Delhi, Delhi - 110031",
+      value: "6/35,Geeta Colony ,Near Post Office East Delhi, Delhi - 110031",
       link: "https://maps.google.com/?q=Geeta+Colony+East+Delhi",
     },
     {

@@ -100,12 +100,13 @@ const Header: React.FC = () => {
             
             {/* Mobile Contact Info */}
             <div className="mt-6 pt-4 border-t border-gray-200 space-y-3">
-              <div className="flex items-center space-x-2 text-sm text-gray-600">
+              {/* calling icon  */}
+              {/* <div className="flex items-center space-x-2 text-sm text-gray-600">
                 <Phone className="h-4 w-4" />
                 <a href="tel:+919899XXXXXX" className="hover:text-blue-800 transition-colors">
-                  +91-9899XXXXXX
+                  +91-9899XXXXX
                 </a>
-              </div>
+              </div> */}
               <div className="flex items-center space-x-2 text-sm text-gray-600">
                 <Mail className="h-4 w-4" />
                 <a href="mailto:lovelyassociates@gmail.com" className="hover:text-blue-800 transition-colors">
