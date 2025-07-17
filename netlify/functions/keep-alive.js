@@ -1,7 +1,7 @@
 // File: netlify/functions/keep-alive.js
 
-export default {
-  async scheduled(event, context) {
+exports.handler = async function(event, context) {
+ 
     const RENDER_BACKEND_URL = 'https://la-server.onrender.com';
 
     console.log('Pinging the backend to keep it alive...');
