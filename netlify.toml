@@ -5,6 +5,6 @@
   status = 200
 
 # Add this block to schedule your function
-[functions."your-function-name"]
+[functions."keep-alive"]
   # This cron schedule means "run every 5 minutes"
   schedule = "*/5 * * * *"
