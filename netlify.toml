@@ -1,4 +1,10 @@
+# This redirect rule remains unchanged
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+# Add this block to schedule your function
+[functions."your-function-name"]
+  # This cron schedule means "run every 5 minutes"
+  schedule = "*/5 * * * *"
