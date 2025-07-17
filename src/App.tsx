@@ -10,29 +10,8 @@ import ProtectedRoute from './components/admin/ProtectedRoute';
 import ServicesPage from './components/ServicesPage';
 import ContactPage from './components/ContactPage';
 import HomePage from './components/HomePage';
-import { useEffect } from 'react'; // Add this import
 
 function App() {
-
-   useEffect(() => {
-    // Only run in production (not during local development)
-    if (process.env.NODE_ENV === 'production') {
-      const pingBackend = () => {
-        fetch('https://la-server.onrender.com')
-          .then(() => console.log('Backend kept alive'))
-          .catch(console.error);
-      };
-
-      // Ping immediately when app loads
-      pingBackend();
-      
-      // Then ping every 4 minutes (240,000ms)
-      const intervalId = setInterval(pingBackend, 240000);
-      
-      return () => clearInterval(intervalId);
-    }
-  }, []);
-
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
