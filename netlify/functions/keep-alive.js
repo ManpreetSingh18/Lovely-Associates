@@ -1,7 +1,7 @@
 // File: netlify/functions/keep-alive.js
 
 exports.handler = async function(event, context) {
- 
+  
     const RENDER_BACKEND_URL = 'https://la-server.onrender.com';
 
     console.log('Pinging the backend to keep it alive...');
@@ -18,9 +18,8 @@ exports.handler = async function(event, context) {
       console.error('Error pinging backend:', error);
     }
 
-    // Netlify's scheduled functions require a 200 response to confirm success
+    // A response is still required to confirm the function ran successfully
     return {
       statusCode: 200,
     };
-  },
 };
