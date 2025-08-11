@@ -42,7 +42,8 @@ const blogSchema = new mongoose.Schema({
     required: [true, 'Thumbnail URL is required'],
     validate: {
       validator: function(v) {
-        return /^https?:\/\/.+\.(jpg|jpeg|png|webp|gif)$/i.test(v);
+        return /^(https?:\/\/.+\.(jpg|jpeg|png|webp|gif)(\?.*)?|https?:\/\/drive\.google\.com\/uc\?export=(view|download)&id=[\w-]+|https?:\/\/lh\d+\.googleusercontent\.com\/.+)$/i.test(v);
+
       },
       message: 'Please provide a valid image URL'
     }

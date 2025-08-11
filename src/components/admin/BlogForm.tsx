@@ -146,11 +146,14 @@ const BlogForm: React.FC<BlogFormProps> = ({ mode }) => {
         .filter(tag => tag.length > 0);
 
       const postData = {
-        title: formData.title.trim(),
-        summary: formData.summary.trim(),
-        tags: tagsArray,
-        thumbnail: formData.thumbnail.trim(),
-        content: formData.content
+          title: formData.title.trim(),
+          summary: formData.summary.trim(),
+          tags: tagsArray,
+          thumbnail: formData.thumbnail.trim(),
+          content: formData.content,
+          author: "admin", // or isAuthenticated()?.username
+          slug: originalSlug || generateSlug(formData.title)
+
       };
 
       let url: string;

@@ -146,7 +146,7 @@ const HomePage: React.FC = () => {
               to="/services"
               className="bg-blue-800 hover:bg-blue-900 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex items-center space-x-2"
             >
-              <span>Explore Listings</span>
+              <span>Explore Services</span>
               <ArrowRight className="h-5 w-5" />
             </Link>
             <Link

@@ -39,6 +39,7 @@ const AdminDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [deleteLoading, setDeleteLoading] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState<Set<string>>(new Set());
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -72,14 +73,14 @@ const AdminDashboard: React.FC = () => {
     }
   };
 
-  const handleDelete = async (postId: string, title: string) => {
+  const handleDelete = async (postSlug: string, title: string) => {
     if (!confirm(`Are you sure you want to delete "${title}"? This action cannot be undone.`)) {
       return;
     }
 
     try {
-      setDeleteLoading(postId);
-      const response = await fetch(`${API_URL}/api/blogs/${postId}`, {
+      setDeleteLoading(postSlug);
+      const response = await fetch(`${API_URL}/api/blogs/${postSlug}`, {
         method: 'DELETE',
       });
 
@@ -88,7 +89,7 @@ const AdminDashboard: React.FC = () => {
       }
 
       // Remove post from local state
-      setPosts(posts.filter(post => post.id !== postId));
+      setPosts(posts.filter(post => post.slug !== postSlug));
       
       // Show success message (you could add a toast notification here)
       alert('Post deleted successfully!');
@@ -326,12 +327,12 @@ const AdminDashboard: React.FC = () => {
                               <Edit className="h-4 w-4" />
                             </button>
                             <button
-                              onClick={() => handleDelete(post.id, post.title)}
-                              disabled={deleteLoading === post.id}
+                              onClick={() => handleDelete(post.slug, post.title)}
+                              disabled={deleteLoading === post.slug}
                               className="p-2 text-gray-400 hover:text-red-600 transition-colors disabled:opacity-50"
                               title="Delete Post"
                             >
-                              {deleteLoading === post.id ? (
+                              {deleteLoading === post.slug ? (
                                 <Loader className="h-4 w-4 animate-spin" />
                               ) : (
                                 <Trash2 className="h-4 w-4" />

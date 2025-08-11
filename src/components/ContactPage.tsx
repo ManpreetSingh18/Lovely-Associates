@@ -113,8 +113,8 @@ const ContactPage: React.FC = () => {
       mainEntity: {
         "@type": "RealEstateAgent",
         name: "Lovely Associates",
-        telephone: "+91-9899XXXXXX",
-        email: "lovelyassociates@gmail.com",
+        telephone: "+91-9818084198",
+        email: "singhragbir10@gmail.com",
         address: {
           "@type": "PostalAddress",
           streetAddress: "Near Geeta Colony",
@@ -224,14 +224,14 @@ const ContactPage: React.FC = () => {
     {
       icon: Mail,
       title: "Email",
-      value: "lovelyassociates@gmail.com",
-      link: "mailto:lovelyassociates@gmail.com",
+      value: "singhragbir10@gmail.com",
+      link: "mailto:singhragbir10@gmail.com",
     },
     {
       icon: Phone,
       title: "Phone",
-      value: "+91-9899XXXXXX",
-      link: "tel:+919899XXXXXX",
+      value: "+91-9818084198",
+      link: "tel:+919818084198",
     },
     {
       icon: MapPin,
@@ -486,14 +486,14 @@ const ContactPage: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:+919899XXXXXX"
+              href="tel:+919818084198"
               className="bg-white text-blue-800 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
             >
               <Phone className="h-5 w-5" />
               <span>Call Now</span>
             </a>
             <a
-              href="https://wa.me/919899XXXXXX"
+              href="https://wa.me/919818084198"
               target="_blank"
               rel="noopener noreferrer"
               className="border-2 border-white hover:bg-white hover:text-blue-800 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"

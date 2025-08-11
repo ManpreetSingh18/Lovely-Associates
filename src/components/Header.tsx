@@ -50,20 +50,7 @@ const Header: React.FC = () => {
           </nav>
 
           {/* Desktop Contact Info */}
-          <div className="hidden lg:flex items-center space-x-4 text-sm text-gray-600">
-            <div className="flex items-center space-x-1">
-              <Phone className="h-4 w-4" />
-              <a href="tel:+919899XXXXXX" className="hover:text-blue-800 transition-colors">
-                +91-9899XXXXXX
-              </a>
-            </div>
-            <div className="flex items-center space-x-1">
-              <Mail className="h-4 w-4" />
-              <a href="mailto:lovelyassociates@gmail.com" className="hover:text-blue-800 transition-colors">
-                lovelyassociates@gmail.com
-              </a>
-            </div>
-          </div>
+          
 
           {/* Mobile Menu Button */}
           <button
@@ -81,7 +68,7 @@ const Header: React.FC = () => {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div className="md:hidden border-t border-gray-200 py-4">
-            <nav className="space-y-4">
+            <nav className="space-y-4 text-center">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
@@ -99,21 +86,7 @@ const Header: React.FC = () => {
             </nav>
             
             {/* Mobile Contact Info */}
-            <div className="mt-6 pt-4 border-t border-gray-200 space-y-3">
-              {/* calling icon  */}
-              {/* <div className="flex items-center space-x-2 text-sm text-gray-600">
-                <Phone className="h-4 w-4" />
-                <a href="tel:+919899XXXXXX" className="hover:text-blue-800 transition-colors">
-                  +91-9899XXXXX
-                </a>
-              </div> */}
-              <div className="flex items-center space-x-2 text-sm text-gray-600">
-                <Mail className="h-4 w-4" />
-                <a href="mailto:lovelyassociates@gmail.com" className="hover:text-blue-800 transition-colors">
-                  lovelyassociates@gmail.com
-                </a>
-              </div>
-            </div>
+            
           </div>
         )}
       </div>

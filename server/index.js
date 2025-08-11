@@ -1,11 +1,20 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+
 import connectDB from './config/database.js';
 import blogRoutes from './routes/blogRoutes.js';
 
 // Load environment variables
-dotenv.config();
+const envFileName = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
+
+// Resolve absolute path to env file from project root (one folder up)
+const envFilePath = path.resolve(process.cwd(), envFileName);
+
+console.log(`Loading env file: ${envFilePath}`);
+
+dotenv.config({ path: envFilePath });
 
 const app = express();
 const PORT = process.env.PORT || 3001;
