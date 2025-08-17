@@ -230,19 +230,19 @@ const ContactPage: React.FC = () => {
     {
       icon: Phone,
       title: "Phone",
-      value: "+91-9818084198",
+      value: "+91-9818084198, 8168180344",
       link: "tel:+919818084198",
     },
     {
       icon: MapPin,
       title: "Office",
-      value: "6/35,Geeta Colony ,Near Post Office East Delhi, Delhi - 110031",
-      link: "https://maps.google.com/?q=Geeta+Colony+East+Delhi",
+      value: "6/35,Opposite Post Office geeta colony, East Delhi,110031",
+      link: "https://maps.app.goo.gl/158bBQQ7i9C214269",
     },
     {
       icon: Clock,
       title: "Hours",
-      value: "Mon - Sat: 9:00 AM - 6:00 PM",
+      value: "Tue - Sun: 11:00 AM - 8:00 PM",
       link: null,
     },
   ];
@@ -460,7 +460,7 @@ const ContactPage: React.FC = () => {
               </div>
               <div className="h-64">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.8974359089447!2d77.27760731508236!3d28.63294948240684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfb0e0e8e0e0f%3A0x0!2sGeeta%20Colony%2C%20Delhi!5e0!3m2!1sen!2sin!4v1234567890123"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3168.429709344039!2d77.27325549999999!3d28.652867099999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfcbccf7bd899%3A0xf49976cff4de648f!2sLovely%20Associates%20-%20Property%20Dealer!5e1!3m2!1sen!2sin!4v1755422182791!5m2!1sen!2sin"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
