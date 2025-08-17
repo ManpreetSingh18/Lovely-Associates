@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Home, Building, Key, ArrowRight, CheckCircle, Users, Award, Clock } from 'lucide-react';
 
 const ServicesPage: React.FC = () => {
+  const goTop = () => window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+
   useEffect(() => {
     // Set SEO meta tags
     document.title = 'Our Services - Buy, Sell & Rent Properties | Lovely Associates';
@@ -217,6 +219,7 @@ const ServicesPage: React.FC = () => {
 
                     <Link
                       to="/contact"
+                      onClick={goTop}
                       className={`inline-flex items-center space-x-2 ${colors.button} text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl`}
                     >
                       <span>Get Started</span>
@@ -298,6 +301,7 @@ const ServicesPage: React.FC = () => {
           </p>
           <Link
             to="/contact"
+            onClick={goTop}
             className="bg-white text-blue-800 hover:bg-gray-100 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 inline-flex items-center space-x-2"
           >
             <span>Contact Us Now</span>

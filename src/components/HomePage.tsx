@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Home, Building, Key, MapPin, Phone, Mail, Star, Users, Award, Clock } from 'lucide-react';
 
 const HomePage: React.FC = () => {
+  const goTop = () => window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+
   useEffect(() => {
     // Set SEO meta tags
     document.title = 'Lovely Associates - Making Realty Dreams a Reality | East Delhi Real Estate';
@@ -147,6 +149,7 @@ const HomePage: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
               to="/services"
+              onClick={goTop}
               className="bg-blue-800 hover:bg-blue-900 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex items-center space-x-2"
             >
               <span>Explore Services</span>
@@ -154,6 +157,7 @@ const HomePage: React.FC = () => {
             </Link>
             <Link
               to="/contact"
+              onClick={goTop}
               className="bg-transparent border-2 border-white hover:bg-white hover:text-gray-900 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105"
             >
               Contact Us
@@ -268,6 +272,7 @@ const HomePage: React.FC = () => {
               </p>
               <Link
                 to="/services"
+                onClick={goTop}
                 className="inline-flex items-center space-x-2 text-blue-800 font-semibold hover:text-blue-900 transition-colors"
               >
                 <span>Learn More</span>
