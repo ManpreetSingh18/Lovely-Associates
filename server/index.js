@@ -12,7 +12,7 @@ const envFileName = process.env.NODE_ENV === 'production' ? '.env.production' : 
 // Resolve absolute path to env file from project root (one folder up)
 const envFilePath = path.resolve(process.cwd(), envFileName);
 
-console.log(`Loading env file: ${envFilePath}`);
+//console.log(`Loading env file: ${envFilePath}`);
 
 dotenv.config({ path: envFilePath });
 

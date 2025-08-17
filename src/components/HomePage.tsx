@@ -110,8 +110,11 @@ const HomePage: React.FC = () => {
     'Krishna Nagar', 
     'Chander Nagar',
     'Beverly Hills',
-    'Mayurdhwaj',
-    'Ekta Apartments'
+    'Mayurdhwaj Apartments',
+    'Ekta Apartments',
+    'Preet Vihar',
+    'East delhi areas'
+
   ];
 
   const stats = [
@@ -314,7 +317,7 @@ const HomePage: React.FC = () => {
                 <div className="relative z-10">
                   <MapPin className="h-8 w-8 mb-4 text-blue-200" />
                   <h3 className="text-lg font-bold mb-2">{area}</h3>
-                  <p className="text-blue-100 text-sm">Explore Properties</p>
+                  {/* <p className="text-blue-100 text-sm">Explore Properties</p> */}
                 </div>
                 <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-white bg-opacity-10 rounded-full group-hover:scale-150 transition-transform duration-500"></div>
               </div>

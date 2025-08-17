@@ -6,7 +6,7 @@ dotenv.config();
 const connectDB = async () => {
   try {
     // For WebContainer environment, we'll use MongoDB memory server or local connection
-    console.log('Mongo URI:', process.env.MONGODB_URI);
+    //console.log('Mongo URI:', process.env.MONGODB_URI);
 
     const mongoUri = process.env.MONGODB_URI ;
     
