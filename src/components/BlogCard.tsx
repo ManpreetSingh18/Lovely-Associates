@@ -18,14 +18,20 @@ interface BlogCardProps {
 }
 
 const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
+
+  const to = `/blog/${post.slug}`;
+  const goTop = () => window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
   return (
     <article className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
       <div className="relative">
+      <Link to={to} onClick={goTop} aria-label={post.title} className="block group">
+
         <img 
           src={post.thumbnail} 
           alt={post.title}
           className="w-full h-48 object-cover"
         />
+        
         <div className="absolute top-4 left-4">
           <div className="flex flex-wrap gap-2">
             {post.tags.map((tag, index) => (
@@ -38,6 +44,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
             ))}
           </div>
         </div>
+        </Link>
       </div>
       
       <div className="p-6">
@@ -53,7 +60,13 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
         </div>
         
         <h3 className="text-xl font-bold text-gray-900 mb-3 leading-tight hover:text-blue-800 transition-colors">
+           <Link
+            to={to}
+            onClick={goTop}
+            className="hover:text-blue-800 transition-colors"
+          >
           {post.title}
+          </Link>
         </h3>
         
         <p className="text-gray-600 mb-4 leading-relaxed">
@@ -61,7 +74,8 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
         </p>
         
         <Link
-          to={`/blog/${post.slug}`}
+          to={to}
+          onClick={goTop}
           className="inline-flex items-center space-x-2 text-blue-800 font-semibold hover:text-blue-900 transition-colors group"
         >
           <span>Read More</span>
